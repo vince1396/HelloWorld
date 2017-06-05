@@ -89,25 +89,32 @@ public class MainActivity extends AppCompatActivity {
         }
         else
         {
-
-
-            createUser.setVisibility(View.VISIBLE);
-            valider.setVisibility(View.INVISIBLE);
-            nom.setVisibility(View.INVISIBLE);
-            email.setVisibility(View.INVISIBLE);
-            rep.setVisibility(View.VISIBLE);
-            repByName.setVisibility(View.VISIBLE);
-
-            String pNom = nom.getText().toString();
             String pEmail = email.getText().toString();
 
-            email.setText("");
-            nom.setText("");
+            if (!isValidEmail((pEmail)))
+            {
+                Toast.makeText(MainActivity.this, "Email incorrect", Toast.LENGTH_SHORT).show();
+                email.setText("");
+            }
+            else
+            {
+                createUser.setVisibility(View.VISIBLE);
+                valider.setVisibility(View.INVISIBLE);
+                nom.setVisibility(View.INVISIBLE);
+                email.setVisibility(View.INVISIBLE);
+                rep.setVisibility(View.VISIBLE);
+                repByName.setVisibility(View.VISIBLE);
 
-            User user = new User();
-            user.setNom(pNom);
-            user.setEmail(pEmail);
-            alRep.add(user);
+                String pNom = nom.getText().toString();
+
+                email.setText("");
+                nom.setText("");
+
+                User user = new User();
+                user.setNom(pNom);
+                user.setEmail(pEmail);
+                alRep.add(user);
+            }
         }
     }
 
@@ -123,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         listContacts.setVisibility(View.VISIBLE);
-        //// TODO: 01/06/2017 setText manquant 
+        // TODO: 01/06/2017 setText manquant
     }
 
     //================================ CLICK SUR BOUTON REPNAME ====================================
@@ -179,7 +186,7 @@ public class MainActivity extends AppCompatActivity {
                 result = "Aucun contact trouvé";
             }
 
-            //// TODO: 01/06/2017 setText manquant
+            // TODO: 01/06/2017 setText manquant
 
             createUser.setVisibility(View.VISIBLE);
             rep.setVisibility(View.VISIBLE);
@@ -187,6 +194,15 @@ public class MainActivity extends AppCompatActivity {
             repByName.setVisibility(View.VISIBLE);
             okByName.setVisibility(View.INVISIBLE);
             listContacts.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public static boolean isValidEmail(CharSequence target) {
+        if(target == null) {
+            return false;
+        }
+        else {
+            return android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
         }
     }
 }
